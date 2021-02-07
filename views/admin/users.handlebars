@@ -29,9 +29,15 @@
       <td>{{this.email}}</td>
       <td>{{this.isAdmin}}</td>
       <td>
-        <form action="/admin/restaurants/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-          <button type="submit" class="btn btn-link">Set as</button>
+        {{#if this.isAdmin}}
+        <form action="/admin/users/{{this.id}}/toggleAdmin?_method=PUT" method="POST" style="display: inline;">
+          <button type="submit" class="btn btn-link">Set as User</button>
         </form>
+        {{else}}
+        <form action="/admin/users/{{this.id}}/toggleAdmin?_method=PUT" method="POST" style="display: inline;">
+          <button type="submit" class="btn btn-link">Set as Admin</button>
+        </form>
+        {{/if}}
       </td>
     </tr>
     {{/each}}

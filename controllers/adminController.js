@@ -129,7 +129,7 @@ const adminController = {
       })
       .then((user) => {
         req.flash('success_messages', 'user was successfully to update')
-        res.redirect('/admin/restaurants')
+        res.redirect('/admin/users')
       })
   }
 }

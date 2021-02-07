@@ -4,6 +4,8 @@ const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('./config/passport')
+const methodOverride = require('method-override')
+
 const db = require('./models') //引入資料庫
 const app = express()
 const port = 3000
@@ -27,6 +29,7 @@ app.use((req, res, next) => {
   next()
 })
 
+app.use(methodOverride('_method'))
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

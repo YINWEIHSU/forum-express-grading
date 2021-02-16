@@ -25,6 +25,14 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
+  const authenticatedUser = (req, res, next) => {
+    if (Number(helpers.getUser(req).id) !== Number(req.params.id)) {
+      req.flash('error_messages', 'Cannot Access');
+      return res.redirect(`/users/${req.user.id}`);
+    }
+    return next();
+  };
+
   //如果使用者訪問首頁，就導向 /restaurants 的頁面
   app.get('/', authenticated, (req, res) => res.redirect('/restaurants'))
   //在 /restaurants 底下則交給 restController.getRestaurants 來處理
@@ -51,8 +59,8 @@ module.exports = (app, passport) => {
   app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
 
   app.get('/users/:id', authenticated, userController.getUser)
-  app.get('/users/:id/edit', authenticated, userController.editUser)
-  app.put('/users/:id', authenticated, upload.single('image'), userController.putUser)
+  app.get('/users/:id/edit', authenticated, authenticatedUser, userController.editUser)
+  app.put('/users/:id', authenticated, authenticatedUser, upload.single('image'), userController.putUser)
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)

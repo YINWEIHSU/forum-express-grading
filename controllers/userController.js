@@ -48,10 +48,13 @@ const userController = {
     res.redirect('/signin')
   },
   getUser: (req, res) => {
-    return User.findByPk(req.params.id).then(user => {
-      console.log(user)
+    let owner = req.session.passport.user
+    User.findByPk(req.params.id).then(user => {
+      console.log('user', user)
+      console.log('owner', owner)
       return res.render('profile', {
-        user: user.toJSON()
+        user: user.toJSON(),
+        owner: owner
       })
     })
   },
@@ -87,9 +90,9 @@ const userController = {
     else {
       return User.findByPk(req.params.id)
         .then((user) => {
-          restaurant.update({
+          user.update({
             name: req.body.name,
-            image: restaurant.image
+            image: user.image
           })
             .then((user) => {
               req.flash('success_messages', 'Profile was successfully to update')

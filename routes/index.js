@@ -27,6 +27,7 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => res.redirect('/restaurants'))
   //在 /restaurants 底下則交給 restController.getRestaurants 來處理
   app.get('/restaurants', authenticated, restController.getRestaurants)
+  app.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
   app.get('/admin/restaurants', authenticatedAdmin, adminController.getRestaurants)
@@ -43,7 +44,7 @@ module.exports = (app, passport) => {
   app.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)
   app.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategory)
   app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
-  
+
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)

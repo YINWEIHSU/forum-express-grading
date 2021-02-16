@@ -16,7 +16,7 @@
   <div class="col-md-8">
     <p>{{restaurant.description}}</p>
     <a href='/restaurants/{{restaurant.id}}/dashboard'>
-      <button type="button" class="btn btn-primary">Dashboard</button>
+      <button type="button" class="btn btn-primary">Dashboard</button></a>
   </div>
   <hr>
 </div>
@@ -34,7 +34,7 @@
   <p>{{this.text}}</p>
   <footer class="blockquote-footer">{{moment this.createdAt}}</footer>
 </blockquote>
-<hr />
+<hr>
 {{/each}}
 <form action="/comments" method="POST">
   <div class="form-group">

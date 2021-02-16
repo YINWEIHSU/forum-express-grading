@@ -1,15 +1,15 @@
 <div class="row">
   <div class="col-md-4">
-    <img class="img-responsive center-block" src="{{user.image}}" style="width: 250px;margin-bottom: 25px;">
+    <img class="img-responsive center-block" src="{{profile.image}}" style="width: 250px;margin-bottom: 25px;">
   </div>
   <div class="col-md-8">
     <div class="well">
       <ul class="list-unstyled">
-        <li><strong>{{user.name}}</strong></li>
-        <li>{{user.email}}</li>
+        <li><strong>{{profile.name}}</strong></li>
+        <li>{{profile.email}}</li>
       </ul>
-      {{#ifCond user.id owner}}
-      <a href='/users/{{user.id}}/edit'>
+      {{#ifCond user.id profile.id}}
+      <a href='/users/{{profile.id}}/edit'>
         <button type="button" class="btn btn-primary">Edit</button>
         {{/ifCond}}
     </div>

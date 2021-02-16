@@ -48,13 +48,9 @@ const userController = {
     res.redirect('/signin')
   },
   getUser: (req, res) => {
-    let owner = req.session.passport.user
     User.findByPk(req.params.id).then(user => {
-      console.log('user', user)
-      console.log('owner', owner)
       return res.render('profile', {
-        user: user.toJSON(),
-        owner: owner
+        profile: user.toJSON(),
       })
     })
   },

@@ -86,14 +86,14 @@ const restController = {
     })
   },
   getDashboard: (req, res) => {
-    return Restaurant.findByPk(req.params.id, {
+    Restaurant.findByPk(req.params.id, {
       include: [
         Category,
         { model: Comment, include: [User] }
       ]
     }).then(restaurant => {
       console.log(restaurant)
-      return res.render('dashBoard', {
+      return res.render('dashboard', {
         restaurant: restaurant.toJSON()
       })
     })

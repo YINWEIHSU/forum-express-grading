@@ -87,7 +87,7 @@ const restController = {
         order: [['createdAt', 'DESC']],
         include: [User, Restaurant]
       })
-    ]).then(comments => {
+    ]).then(([restaurants, comments]) => {
       return res.render('feeds', {
         restaurants: restaurants,
         comments: comments

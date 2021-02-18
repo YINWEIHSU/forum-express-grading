@@ -106,6 +106,23 @@ const restController = {
         restaurant: restaurant.toJSON()
       })
     })
-  }
+  },
+  getTopRestaurant: (req, res) => {
+    return Restaurant.findAll({
+      limit: 10,
+      include: [
+        { model: User, as: 'FavoritedUsers' }
+      ]
+    }).then(restaurants => {
+      restaurants = restaurants.map(restaurant => ({
+        ...restaurant.dataValues,
+        FavoritedCount: restaurant.FavoritedUsers.length,
+        isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(restaurant.id)
+      }))
+      // 依追蹤者人數排序清單
+      restaurants = restaurants.sort((a, b) => b.FavoritedCount - a.FavoritedCount)
+      return res.render('topRestaurant', { restaurants: restaurants })
+    })
+  },
 }
 module.exports = restController

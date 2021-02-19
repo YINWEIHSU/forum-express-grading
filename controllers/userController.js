@@ -44,6 +44,7 @@ const userController = {
   },
 
   signIn: (req, res) => {
+    req.session.viewedRestaurants = []
     req.flash('success_messages', '成功登入！')
     res.redirect('/restaurants')
   },

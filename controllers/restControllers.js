@@ -53,6 +53,7 @@ const restController = {
     })
   },
   getRestaurant: (req, res) => {
+    let viewedRestaurants = req.session.viewedRestaurants
     Restaurant.findByPk(req.params.id, {
       include: [
         Category,
@@ -63,7 +64,10 @@ const restController = {
     }).then(restaurant => {
       const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(helpers.getUser(req).id)
       const isLiked = restaurant.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
-      restaurant.increment('viewCounts')
+      if (!viewedRestaurants.includes(restaurant.id)) {
+        restaurant.increment('viewCounts')
+        viewedRestaurants.push(restaurant.id)
+      }
       return res.render('restaurant', {
         restaurant: restaurant.toJSON(),
         isFavorited: isFavorited,
@@ -101,7 +105,6 @@ const restController = {
         { model: Comment, include: [User] }
       ]
     }).then(restaurant => {
-      console.log(restaurant)
       return res.render('dashboard', {
         restaurant: restaurant.toJSON()
       })

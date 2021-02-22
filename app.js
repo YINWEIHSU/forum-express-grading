@@ -15,14 +15,15 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.engine('handlebars', handlebars({
- defaultLayout: 'main',
- helpers: require('./config/handlebars-helpers')
+  defaultLayout: 'main',
+  helpers: require('./config/handlebars-helpers')
 })) // Handlebars 註冊樣板引擎
 app.set('view engine', 'handlebars') // 設定使用 Handlebars 做為樣板引擎
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())
+
 
 // setup passport
 app.use(passport.initialize())
@@ -43,6 +44,6 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
-require('./routes')(app, passport) // 把 passport 傳入 routes
+require('./routes')(app) // 把 passport 傳入 routes
 
 module.exports = app
